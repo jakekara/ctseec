@@ -73,9 +73,16 @@ var draw = function(data){
 
     var link = boxes.append("div")
 	.html(function(d){
-	    return "<a target='_blank' href='" + d["link"] + "'>"
-		+ d["Report Type"]
-		+ "</a>"
+	    var ret =  "<a target='_blank' href='" + d["link"] + "'>"
+		+ d["Report Type"];
+
+	    if (d["Document Type"] != "Original") {
+		ret += " *" + d["Document Type"]
+	    }
+	    
+	    ret += "</a>"
+
+	    return ret;
 	});
 
 }
