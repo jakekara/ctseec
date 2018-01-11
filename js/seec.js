@@ -1,6 +1,4 @@
-var go_with_data = function(data){
-
-    console.log("Going with data", data);
+var draw = function(data){
 
     var office = function(d){
 	return d["Office Sought"];
@@ -22,7 +20,6 @@ var go_with_data = function(data){
 	if (offices.indexOf(office(d)) < 0) { offices.push(office(d)) }
     });
 
-    console.log(offices)
 
     var aggregate = function(d){ return numeral(d["aggregate"]).value(); }
 
@@ -30,8 +27,6 @@ var go_with_data = function(data){
 
     var max = d3.max(amounts)
 
-    console.log(max)
-    
     var data = data.sort(function(a, b){
 	if (numeral(a["aggregate"]).value() < numeral(b["aggregate"]).value()) return 1;
 	return -1;
@@ -40,6 +35,7 @@ var go_with_data = function(data){
     });
 
     var container = d3.select("#container");
+    container.html("");
 
     var boxes = container.selectAll(".candidate")
 	.data(data)
@@ -81,7 +77,26 @@ var go_with_data = function(data){
 		+ d["Report Type"]
 		+ "</a>"
 	});
-};
+
+}
+
+var go_with_data = function(data){
+    draw(data);
+
+    var do_search = function(){
+	var term = d3.select("#search").node().value;
+
+	var filtered = data.filter(function(d){
+	    return JSON.stringify(d).toUpperCase()
+		.indexOf(term.toUpperCase()) >= 0;
+	});
+
+	draw(filtered);
+    }
+
+    d3.select("#search").on("keyup", do_search);
+    d3.select("#search_botton").on("click", do_search);
+}
 
 d3.csv("data/30/subtotals.csv", go_with_data);
-console.log("OK");
+
