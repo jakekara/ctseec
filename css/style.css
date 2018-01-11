@@ -16,7 +16,7 @@ body {
     text-align: center;
 }
 
-.box:nth-child(even){
+.box:nth-child(odd){
     background-color: #efefef;
 }
 
@@ -47,7 +47,7 @@ body {
     border: 1px solid gray;
 }
 
-.box:nth-child(odd) .amount{
+.box:nth-child(even) .amount{
     /* background-color: #efefef; */
 }
 
