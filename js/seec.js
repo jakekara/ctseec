@@ -105,5 +105,5 @@ var go_with_data = function(data){
     d3.select("#search_botton").on("click", do_search);
 }
 
-d3.csv("data/30/subtotals.csv", go_with_data);
+d3.csv("data/combined.csv", go_with_data);
 
