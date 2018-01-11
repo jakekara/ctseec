@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css?family=Lato|Merriweather:400,700');
+
+/* font-family: 'Lato', sans-serif; */
+/* font-family: 'Merriweather', serif; */
+
+body {
+    font-family: 'Merriweather', serif;
+    padding: 0px;
+    margin: 0px;
+}
+
+.box{
+    padding: 14px;
+    text-align: center;
+}
+
+.box:nth-child(even){
+    background-color: #efefef;
+}
+
+.box > *{
+    margin-bottom: 8px;
+}
+
+.box-head{
+    /* font-size: 2em; */
+}
+
+.candidate-name{
+    font-size: 1.5em;
+}
+
+.amount {
+    font-size: 2em;
+    color: forestgreen;
+    border-radius: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
+    margin-left: auto;
+    margin-right: auto;
+    display: inline-block;
+    background-color: white;
+}
+
+.box:nth-child(odd) .amount{
+    background-color: #efefef;
+}
+
+
