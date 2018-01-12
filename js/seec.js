@@ -21,17 +21,22 @@ var draw = function(data){
     });
 
 
-    var aggregate = function(d){ return numeral(d["aggregate"]).value(); }
+    var subtotal = function(d){ return numeral(d["aggregate_subtotal"]).value(); }
+    var cash = function(d){ return numeral(d["aggregate_cash"]).value(); }
+    var unpaid = function(d){ return numeral(d["period_exp_unpaid"]).value(); }
+    var paid = function(d){ return numeral(d["aggregate_exp_paid"]).value(); }    
 
-    var amounts = data.map(aggregate);
-
+    var amounts = data.map(subtotal);
     var max = d3.max(amounts)
+    var sum = d3.sum(amounts)
+
+    console.log(sum, max, data);
 
     var data = data.sort(function(a, b){
-	if (numeral(a["aggregate"]).value() < numeral(b["aggregate"]).value()) return 1;
+	if (subtotal(a) < subtotal(b)) return 1;
 	return -1;
     }).filter(function(a){
-	return aggregate(a) >= 1000;
+	return subtotal(a) >= 1000;
     });
 
     var container = d3.select("#container");
@@ -57,8 +62,50 @@ var draw = function(data){
 	.text(function(d){ return "Running for " + office_disp(d) + "" });
 
     boxes.append("div")
-	.classed("amount", true)
-	.text(function(d){ return  numeral(d["aggregate"]).format("$0,0"); })
+	.classed("big", true)
+	.classed("number", true)
+	.text(function(d){ return  numeral(subtotal(d)).format("$0,0"); })
+
+    
+
+    boxes.append("div")
+	.classed("secondary-numbers", true)
+	.html(function(d){
+	    var ret = ""
+		+ "<div class='small number'>"
+		+ "<div class='value'>"
+		+ numeral(cash(d)).format("$0,0")
+		+ "</div>"
+		+ "<div class='label sans'>"
+		+ "Cash on hand"
+		+ "</div>"
+		+ "</div>"
+
+		// + "<div class='small-number'>"
+		// + d["aggregate_receipts"]
+		// + "</div>"
+	    
+
+		+ "<div class='small number'>"
+		+ "<div class='value'>"
+		+ numeral(paid(d)).format("$0,0")
+		+ "</div>"
+		+ "<div class='label sans'>"
+		+ "expenses paid"
+		+ "</div>"
+		+ "</div>"
+
+		+ "<div class='small number'>"
+		+ "<div class='value'>"	    
+		+ numeral(unpaid(d)).format("$0,0")
+		+ "</div>"
+		+ "<div class='label sans'>"
+		+ "expenses unpaid"
+		+ "</div>"
+		+ "</div>"
+	    return ret
+	    
+	});
 
     var committee = function(d){
 	return ""
@@ -91,12 +138,18 @@ var go_with_data = function(data){
     draw(data);
 
     var do_search = function(){
-	var term = d3.select("#search").node().value;
+	var terms = d3.select("#search").node().value.split(" ");
 
-	var filtered = data.filter(function(d){
-	    return JSON.stringify(d).toUpperCase()
-		.indexOf(term.toUpperCase()) >= 0;
-	});
+	var filtered = data;
+
+	for (t in terms){
+	    var term = terms[t];
+	    console.log("term", term);
+	    filtered = filtered.filter(function(d){
+		return JSON.stringify(d).toUpperCase()
+		    .indexOf(term.toUpperCase()) >= 0;
+	    });
+	}
 
 	draw(filtered);
     }
@@ -105,5 +158,5 @@ var go_with_data = function(data){
     d3.select("#search_botton").on("click", do_search);
 }
 
-d3.csv("data/combined.csv", go_with_data);
+d3.csv("data/combined-summary.csv", go_with_data);
 
