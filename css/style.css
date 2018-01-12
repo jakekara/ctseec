@@ -62,6 +62,7 @@ body {
 }
 
 .number {
+    background-color: white;    
 }
 
 .sans {
@@ -91,7 +92,7 @@ body {
     margin-left: auto;
     margin-right: auto;
     display: inline-block;
-    background-color: white;
+
  
 }
 

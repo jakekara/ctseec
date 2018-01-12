@@ -91,7 +91,7 @@ var draw = function(data){
 		+ numeral(paid(d)).format("$0,0")
 		+ "</div>"
 		+ "<div class='label sans'>"
-		+ "expenses paid"
+		+ "Expenses paid"
 		+ "</div>"
 		+ "</div>"
 
@@ -100,7 +100,7 @@ var draw = function(data){
 		+ numeral(unpaid(d)).format("$0,0")
 		+ "</div>"
 		+ "<div class='label sans'>"
-		+ "expenses unpaid"
+		+ "Expenses unpaid"
 		+ "</div>"
 		+ "</div>"
 	    return ret
