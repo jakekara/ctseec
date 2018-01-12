@@ -46,6 +46,7 @@ body {
 
 .secondary-numbers{
     display:flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     max-width: 600px;
     margin-left: auto;
@@ -55,8 +56,9 @@ body {
 }
 
 .secondary-numbers .number{
-    padding: 4px;
+    padding: 0.5em;
     border: 1px solid lightgray;
+    border-radius: 0.5em;
 }
 
 .number {
